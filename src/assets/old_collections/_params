@@ -1,0 +1,24 @@
+ESQUEMA ELEMENTOS DEL PIN
+id: codigo obligatorio
+imagen: obligatoria
+titulo: obligatorio
+descripcion: opcional
+comentarios: array
+autor: obligatorio (objeto usuario)
+
+ESQUEMA ELEMENTOS DEL BOARD
+usuario: obligatorio (objeto usuario)
+colaboradores: opcional
+nombre: obligatorio (objeto usuario)
+pines: array
+
+
+ESQUEMA USUARIO
+nombre: obligatorio (objeto usuario)
+foto perfil: opcional (objeto usuario)
+tableros: por lo menos uno obligatorio
+followers: array
+following: array
+correo: obligatorio
+contraseña: obligatorio
+descripción: ...
