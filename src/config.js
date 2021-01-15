@@ -1,6 +1,6 @@
 const baseConfig = {
   environment: 'development',
-  port: '5050',
+  port: '3001',
   secrets: {},
   mongoURI: '',
 };
