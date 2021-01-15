@@ -5,10 +5,7 @@ const config = require('./config.js');
 const cors = require('cors');
 
 /*
- * const authRouter = require('./resources/auth/auth.router');
-const pinsRouter = require('./resources/pins/pins.router');
-const usersRouter = require('./resources/users/users.router');
-const boardsRouter = require('./resources/boards/boards.router');
+routers
 */
 
 const jwt = require('express-jwt');
@@ -25,16 +22,11 @@ app.use(morgan('dev'));
 app.disable('x-powered-by');
 
 /*
-app.use('/', authRouter);
-app.use('/api/pins', pinsRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/boards', boardsRouter);
+endpoints
 */
 
 /*
-app.get('/protected', jwt( { secret: process.env.TOKEN_SECRET, algorithms: ['HS256'] } ), (req, res) => {
-  res.send('protected');
-});
+token
 */
 
 const start = async () => {
