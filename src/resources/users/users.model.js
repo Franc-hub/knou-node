@@ -2,21 +2,24 @@ const mongoose = require('mongoose');
 
 // Define model schema
 const UserSchema = mongoose.Schema({
-    firstname: String,
-    lastname: String,
     username: String,
     email: String,
     password: String,
     avatar: String,
+    usercreation: Date,
+    premium: Boolean,
     profile: {
+        firstname: String,
+        lastname: String,
         gender: String,
         birthdate: Date,
         location: String,
+        photos: [],
         hobbies: []
     },
     preferences: {
         gender: String,
-        agemargin: [],
+        agerange: [],
         location: String,
         hobbies: []
     }
