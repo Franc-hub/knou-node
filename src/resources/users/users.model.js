@@ -8,12 +8,14 @@ const UserSchema = mongoose.Schema({
     avatar: String,
     usercreation: Date,
     premium: Boolean,
+    likes: [],
     profile: {
         firstname: String,
         lastname: String,
-        gender: String,
         birthdate: Date,
         location: String,
+        description: String,
+        gender: String,
         photos: [],
         hobbies: []
     },
