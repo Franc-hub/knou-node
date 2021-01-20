@@ -82,5 +82,6 @@ module.exports = {
     get,
     all,
     update,
-    remove
+    remove,
+    User
 };
