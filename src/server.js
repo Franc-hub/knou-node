@@ -9,7 +9,7 @@ const mongo = require("./config/mongo");
 
 //routers
 const usersRouter = require('./resources/users/users.router');
-
+const authRouter = require('./resources/auth/auth.router');
 //app
 dotenv.config();
 const app = express();
@@ -21,7 +21,7 @@ app.disable('x-powered-by');
 
 //endpoints
 app.use('/api/users', usersRouter);
-
+app.use('/api/auth', authRouter);
 //token
 app.get('/protected', jwt( { secret: process.env.TOKEN_SECRET, algorithms: ['HS256'] } ), (req, res) => {
   res.send('protected');
