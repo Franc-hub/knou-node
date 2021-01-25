@@ -2,28 +2,28 @@ const mongoose = require('mongoose');
 
 // Define model schema
 const UserSchema = mongoose.Schema({
-    username: String,
-    email: String,
-    password: String,
-    avatar: String,
-    usercreation: Date,
-    premium: Boolean,
-    likes: [],
+    account: {
+        username: mongoose.Schema.Types.String,
+        email: mongoose.Schema.Types.String,
+        password: mongoose.Schema.Types.String,
+        created: mongoose.Schema.Types.Date,
+        premium: mongoose.Schema.Types.Boolean,
+    },
     profile: {
-        firstname: String,
-        lastname: String,
-        birthdate: Date,
-        location: String,
-        description: String,
-        gender: String,
-        photos: [],
-        hobbies: []
+        firstname: mongoose.Schema.Types.String,
+        lastname: mongoose.Schema.Types.String,
+        birthdate: mongoose.Schema.Types.Date,
+        description: mongoose.Schema.Types.String,
+        gender: mongoose.Schema.Types.String,
+        photos: mongoose.Schema.Types.Array,
+        hobbies: mongoose.Schema.Types.Array,
+        location: mongoose.Schema.Types.Array
     },
     preferences: {
-        gender: String,
-        agerange: [],
-        location: String,
-        hobbies: []
+        orientation: mongoose.Schema.Types.String,
+        agerange: mongoose.Schema.Types.Array,
+        distance: mongoose.Schema.Types.Number,
+        hobbies: mongoose.Schema.Types.Array
     }
 });
 
