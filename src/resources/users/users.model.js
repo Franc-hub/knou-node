@@ -30,13 +30,14 @@ const UserSchema = mongoose.Schema({
 const User = mongoose.model('UserModel', UserSchema);
 
 //create
-const create = (user) => {
-    User.create(user, function (err, docs) {
+const create = async (user) => {
+    return await User.create(user, function (err, docs) {
         if (err) {
             console.log(err)
         }
         else {
             console.log('Created Docs : ', docs);
+            return docs;
         }
     });
 };
