@@ -6,19 +6,20 @@ const UserSchema = mongoose.Schema({
     lastname: mongoose.Schema.Types.String,
     email: mongoose.Schema.Types.String,
     password: mongoose.Schema.Types.String,
-    created: mongoose.Schema.Types.Date,
-    updated: mongoose.Schema.Types.Date,
     premium: mongoose.Schema.Types.Boolean,
-    signup_step: mongoose.Schema.Types.Number,
-    description: mongoose.Schema.Types.String,
     age: mongoose.Schema.Types.Number,
     age_range: mongoose.Schema.Types.Array,
     gender: mongoose.Schema.Types.String,
     orientation: mongoose.Schema.Types.String,
+    description: mongoose.Schema.Types.String,
     location: mongoose.Schema.Types.Array,
     distance_range: mongoose.Schema.Types.Number,
     hobbies: mongoose.Schema.Types.Array,
-    photos: mongoose.Schema.Types.Array
+    photos: mongoose.Schema.Types.Array,
+    created: mongoose.Schema.Types.Date,
+    updated: mongoose.Schema.Types.Date,
+    signup_step: mongoose.Schema.Types.Number,
+    signup_completed: mongoose.Schema.Types.Boolean,
 });
 
 const User = mongoose.model('UserModel', UserSchema);
