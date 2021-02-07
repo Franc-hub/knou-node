@@ -2,41 +2,37 @@ const mongoose = require('mongoose');
 
 // Define model schema
 const UserSchema = mongoose.Schema({
-    username: String,
-    email: String,
-    password: String,
-    avatar: String,
-    usercreation: Date,
-    premium: Boolean,
-    likes: [],
-    profile: {
-        firstname: String,
-        lastname: String,
-        birthdate: Date,
-        location: String,
-        description: String,
-        gender: String,
-        photos: [],
-        hobbies: []
-    },
-    preferences: {
-        gender: String,
-        agerange: [],
-        location: String,
-        hobbies: []
-    }
+    firstname: mongoose.Schema.Types.String,
+    lastname: mongoose.Schema.Types.String,
+    email: mongoose.Schema.Types.String,
+    password: mongoose.Schema.Types.String,
+    premium: mongoose.Schema.Types.Boolean,
+    age: mongoose.Schema.Types.Number,
+    age_range: mongoose.Schema.Types.Array,
+    gender: mongoose.Schema.Types.String,
+    orientation: mongoose.Schema.Types.String,
+    description: mongoose.Schema.Types.String,
+    location: mongoose.Schema.Types.Array,
+    distance_range: mongoose.Schema.Types.Number,
+    hobbies: mongoose.Schema.Types.Array,
+    photos: mongoose.Schema.Types.Array,
+    created: mongoose.Schema.Types.Date,
+    updated: mongoose.Schema.Types.Date,
+    signup_step: mongoose.Schema.Types.Number,
+    signup_completed: mongoose.Schema.Types.Boolean,
 });
 
 const User = mongoose.model('UserModel', UserSchema);
 
 //create
-const create = (user) => {
-    User.create(user, function (err, docs) {
+const create = async (user) => {
+    return await User.create(user, function (err, docs) {
         if (err) {
             console.log(err)
         }
         else {
             console.log('Created Docs : ', docs);
+            return docs;
         }
     });
 };
