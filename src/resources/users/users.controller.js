@@ -1,9 +1,9 @@
 const userModel = require('./users.model')
 
 //create user
-const create = (req, res) => {
+const create = async (req, res) => {
     const newuser = req.body;
-    const usersUpdated = userModel.create(newuser);
+    const usersUpdated = await userModel.create(newuser);
     return res.status(201).json(usersUpdated);
 };
 
