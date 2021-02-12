@@ -1,5 +1,12 @@
 const userModel = require('./users.model')
+const cloudinary = require ( 'cloudinary' ) .v2;
 
+
+cloudinary.config({ 
+    cloud_name: "dcxuyxqvo", 
+    api_key: '387288113589199', 
+    api_secret: '7FCU8VfE3k6IB2oyHxdtts5K9Bo' 
+  });
 //create user
 const create = async (req, res) => {
     const newuser = req.body;
@@ -35,6 +42,8 @@ const remove = (req, res) => {
     const usersWithoutTheDeleted = userModel.remove(req.params.id);
     return res.status(200).json(usersWithoutTheDeleted);
 };
+
+
 
 module.exports = {
     create,

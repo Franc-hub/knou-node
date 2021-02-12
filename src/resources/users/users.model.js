@@ -16,8 +16,8 @@ const UserSchema = mongoose.Schema({
     distance_range: mongoose.Schema.Types.Number,
     hobbies: mongoose.Schema.Types.Array,
     photos: mongoose.Schema.Types.Array,
-    created: mongoose.Schema.Types.Date,
-    updated: mongoose.Schema.Types.Date,
+    created: mongoose.Schema.Types.Date, //created_add
+    updated: mongoose.Schema.Types.Date,  //updated_add
     signup_step: mongoose.Schema.Types.Number,
     signup_completed: mongoose.Schema.Types.Boolean,
 });
