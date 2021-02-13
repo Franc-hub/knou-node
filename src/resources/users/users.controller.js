@@ -1,6 +1,7 @@
 const userModel = require('./users.model')
 const cloudinary = require ( 'cloudinary' ) .v2;
-
+const multer = require('multer');
+const upload = multer();
 
 cloudinary.config({ 
     cloud_name: "dcxuyxqvo", 
@@ -43,6 +44,10 @@ const remove = (req, res) => {
     return res.status(200).json(usersWithoutTheDeleted);
 };
 
+//updated photos
+const updatePhotos = (req,res) => {
+   console.log(req.files) 
+}
 
 
 module.exports = {
@@ -51,4 +56,5 @@ module.exports = {
     getAll,
     getOne,
     remove,
+    updatePhotos
 };
