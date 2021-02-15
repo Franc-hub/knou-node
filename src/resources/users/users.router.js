@@ -17,7 +17,7 @@ router
 
 router
     .route('/:id/photos')
-    .put(upload.array("photos", 8), usersController.updatePhotos);
+    .post(upload.array("photos", 8), usersController.updatePhotos);
 
 
 
