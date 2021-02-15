@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const usersController = require('./users.controller');
 const multer = require('multer');
-const upload = multer();
+const upload = multer(({ dest: 'uploads/' }));
 const router = Router();
 
 router.route('/')
@@ -17,7 +17,7 @@ router
 
 router
     .route('/:id/photos')
-    .post(upload.array("photos", 8), usersController.updatePhotos);
+    .put(upload.array("photos", 8), usersController.updatePhotos);
 
 
 

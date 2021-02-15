@@ -6,13 +6,20 @@ const cors = require('cors');
 const jwt = require('express-jwt');
 const dotenv = require("dotenv");
 const mongo = require("./config/mongo");
-
+const multer = require('multer');
 //routers
 const usersRouter = require('./resources/users/users.router');
 const authRouter = require('./resources/auth/auth.router');
 //app
 dotenv.config();
 const app = express();
+// upload file path
+const FILE_PATH = 'uploads';
+
+// configure multer
+const upload = multer({
+    dest: `${FILE_PATH}/`
+});
 app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
