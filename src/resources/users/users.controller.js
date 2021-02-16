@@ -46,7 +46,6 @@ const remove = (req, res) => {
 
 //updated photos
 const updatePhotos = async (req, res) => {
-    
     console.log(req.body);
     console.log(req.files);
 }

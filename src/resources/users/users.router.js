@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const usersController = require('./users.controller');
 const multer = require('multer');
-const upload = multer(({ dest: 'uploads/' }));
+const upload = multer({ dest: 'uploads/' });
 const router = Router();
 
 router.route('/')
@@ -14,11 +14,8 @@ router
     .put(usersController.update)
     .delete(usersController.remove);
 
-
 router
     .route('/:id/photos')
     .put(upload.array("photos", 8), usersController.updatePhotos);
-
-
 
 module.exports = router;
