@@ -1,13 +1,9 @@
 const userModel = require('./users.model')
-const cloudinary = require ( 'cloudinary' ) .v2;
+const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 const upload = multer();
 
-cloudinary.config({ 
-    cloud_name: "dcxuyxqvo", 
-    api_key: '387288113589199', 
-    api_secret: '7FCU8VfE3k6IB2oyHxdtts5K9Bo' 
-  });
+
 //create user
 const create = async (req, res) => {
     const newuser = req.body;
@@ -46,9 +42,46 @@ const remove = (req, res) => {
 
 //updated photos
 const updatePhotos = async (req, res) => {
-    console.log(req.body);
-    console.log(req.files);
+    const userId = req.params.id;
+    const imagesToUpload = req.files.map(image => {
+            return {
+                image: image.buffer,
+                mimetype: image.mimetype
+            }
+    })
+    // Save all the Images in the array with insertMany()
+    userModel.User.updateOne({'_id': userId},{'photos': imagesToUpload}, (err, result) => {
+        if (err) {
+            res.status(400).send(err);
+        } else {
+            res.status(200).send(result);
+        }
+    });
 }
+
+
+
+
+/*  const cloudinary = require('cloudinary').v2;
+cloudinary.config({ 
+    cloud_name: "dcxuyxqvo", 
+    api_key: '387288113589199', 
+    api_secret: '7FCU8VfE3k6IB2oyHxdtts5K9Bo' 
+  });
+
+  const responses = [];
+
+  req.files.forEach(async file => {
+      try {
+          console.log(`data:${file.mimetype};base64,` + file.buffer.toString('base64'))
+        const result = await cloudinary.uploader.unsigned_upload(`data:${file.mimetype};base64,` + file.buffer.toString('base64'), '', '') ;
+      } catch (e) {
+          console.log(e.text)
+      }
+    responses.push(result);
+  })
+
+  console.log(responses); */
 
 
 module.exports = {
