@@ -21,7 +21,17 @@ const UserSchema = mongoose.Schema({
     signup_step: mongoose.Schema.Types.Number,
     signup_completed: mongoose.Schema.Types.Boolean,
 });
+const PhotoSchema = mongoose.Schema({
 
+    uploadPhoto: {
+        type: mongoose.Schema.Types.Buffer,
+        ref: 'UserModel',
+    },
+    updated: mongoose.Schema.Types.Date,
+    created: mongoose.Schema.Types.Date
+});
+
+const Photo = mongoose.model('PhotoModel',PhotoSchema);
 const User = mongoose.model('UserModel', UserSchema);
 
 //create
@@ -79,5 +89,6 @@ module.exports = {
     all,
     update,
     remove,
-    User
+    User,
+    Photo
 };
