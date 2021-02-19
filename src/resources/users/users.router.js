@@ -16,6 +16,6 @@ router
 
 router
     .route('/:id/photos')
-    .put(upload.array("photos", 8), usersController.updatePhotos);
+    .put(upload.single("photo"), usersController.uploadPhoto);
 
 module.exports = router;

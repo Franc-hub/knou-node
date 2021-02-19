@@ -40,21 +40,31 @@ const remove = (req, res) => {
     return res.status(200).json(usersWithoutTheDeleted);
 };
 
+const uploadPhoto = async (req, res) => {
+    const imgToUpload = await userModel.createImage({
+        photo: req.file.buffer,
+        user: req.params.id
+    });
+
+    console.log(imgToUpload)
+
+    return res.status(200).json(imgToUpload);
+}
+
 //updated photos
 const updatePhotos = async (req, res) => {
-    const userId = req.params.id;
     const imagesToUpload = req.files.map(image => {
-            return {
-                image: image.buffer,
-                mimetype: image.mimetype
-            }
+        return {
+            image: image.buffer,
+            mimetype: image.mimetype
+        }
     })
     // Save all the Images in the array with insertMany()
-    userModel.User.updateOne({'_id': userId},{'photos': imagesToUpload}, (err, result) => {
+    userModel.Photo.updateOne({ 'photoUpload': imagesToUpload  }, (err, imagesToUpload) => {
         if (err) {
             res.status(400).send(err);
         } else {
-            res.status(200).send(result);
+            res.status(200).send(imagesToUpload);
         }
     });
 }
@@ -90,5 +100,5 @@ module.exports = {
     getAll,
     getOne,
     remove,
-    updatePhotos
+    uploadPhoto
 };

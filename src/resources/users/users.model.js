@@ -22,11 +22,11 @@ const UserSchema = mongoose.Schema({
     signup_completed: mongoose.Schema.Types.Boolean,
 });
 const PhotoSchema = mongoose.Schema({
-
-    uploadPhoto: {
-        type: mongoose.Schema.Types.Buffer,
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'UserModel',
     },
+    photo: mongoose.Schema.Types.Buffer,
     updated: mongoose.Schema.Types.Date,
     created: mongoose.Schema.Types.Date
 });
@@ -46,6 +46,18 @@ const create = async (user) => {
         }
     });
 };
+
+const createImage = async (photo) => {
+    return await Photo.create(photo, function (err, docs) {
+        if (err) {
+            console.log(err)
+        }
+        else {
+            console.log('Created Docs : ', docs);
+            return docs;
+        }
+    });
+}
 
 //get (get one)
 const get = async (id) => {
@@ -85,6 +97,7 @@ const remove = (id) => {
 
 module.exports = {
     create,
+    createImage,
     get,
     all,
     update,
