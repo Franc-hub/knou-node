@@ -42,7 +42,7 @@ const all = async () => {
 // update
 const update = (id, updateMatch) => {
   let query = { _id: id };
-  Match.updateOne(query, updateLike, function (err, docs) {
+  Match.updateOne(query, updateMatch, function (err, docs) {
     if (err) {
       console.log(err);
     } else {
