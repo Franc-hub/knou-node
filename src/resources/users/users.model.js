@@ -59,6 +59,10 @@ const createImage = async (photo) => {
     });
 }
 
+const getImages = async (user) =>{
+    let query = { user: user };
+    return await Photo.find(query)
+}
 //get (get one)
 const get = async (id) => {
     let query = { _id: id };
@@ -102,6 +106,7 @@ module.exports = {
     all,
     update,
     remove,
+    getImages,
     User,
     Photo
 };

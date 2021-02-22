@@ -46,13 +46,21 @@ const uploadPhoto = async (req, res) => {
         user: req.params.id
     });
 
-    console.log(imgToUpload)
+    const photos = await userModel.getImages(req.params.id);
+    
+    // Iterate over each image to convert the buffer array into a base64 string
+    all = photos.map(photo => {
+        return {
+            image: photo.photo.toString('base64')
+        };
+    });
+    console.log(all);
 
-    return res.status(200).json(imgToUpload);
+    return res.status(200).json(all);
 }
 
 //updated photos
-const updatePhotos = async (req, res) => {
+/* const updatePhotos = async (req, res) => {
     const imagesToUpload = req.files.map(image => {
         return {
             image: image.buffer,
@@ -66,8 +74,18 @@ const updatePhotos = async (req, res) => {
         } else {
             res.status(200).send(imagesToUpload);
         }
-    });
-}
+    }); */
+
+
+const getByUser = async (req, res) => {
+    const photos = await userModel.getImages(req.params.id);
+    if (photos) {
+        console.log(photos);
+        return res.status(200).json(photos);
+    }
+    return res.status(404).end();
+};
+
 
 
 
@@ -100,5 +118,6 @@ module.exports = {
     getAll,
     getOne,
     remove,
-    uploadPhoto
+    uploadPhoto,
+    getByUser
 };
