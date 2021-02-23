@@ -1,63 +1,60 @@
 const mongoose = require('mongoose');
 
-//Define model schema 
+//Define model schema
 const DislikeSchema = mongoose.Schema({
-
-    giving: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserModel',
-    },
-    receiving: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserModel',
-    },
-    created: mongoose.Schema.Types.Date
+  sender: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'UserModel',
+  },
+  receiver: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'UserModel',
+  },
+  created: mongoose.Schema.Types.Date,
 });
 
 const Dislike = mongoose.model('DislikeModel', DislikeSchema);
 
 //create
 const create = async (dislike) => {
-    return await Dislike.create(dislike, function (err, docs) {
-        if (err) {
-            console.log(err)
-        }
-        else {
-            console.log('Created Docs : ', docs);
-            return docs;
-        }
-    });
+  return await Dislike.create(dislike, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Created Docs : ', docs);
+      return docs;
+    }
+  });
 };
 
 // Premium
 
 //get (get one)
 const get = async (id) => {
-    let query = { _id: id };
-    return await Dislike.findOne(query)/* .populate('giving', 'receiving'); */
+  let query = { _id: id };
+  return await Dislike.findOne(query); /* .populate('giving', 'receiving'); */
 };
 
 //get (get all)
 const all = async () => {
-    return await Dislike.find()/* .populate('giving', 'receiving'); */
+  return await Dislike.find(); /* .populate('giving', 'receiving'); */
 };
-// update 
+// update
 const update = (id, updatedislike) => {
-    let query = { _id: id };
-    Dislike.updateOne(query, updatedislike, function (err, docs) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Updated Docs : ', docs);
-        }
-    });
+  let query = { _id: id };
+  Dislike.updateOne(query, updatedislike, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Updated Docs : ', docs);
+    }
+  });
 };
-
 
 module.exports = {
-    create,
-    get,
-    all,
-    update,
-    Dislike
+  create,
+  get,
+  all,
+  update,
+  Dislike,
 };
