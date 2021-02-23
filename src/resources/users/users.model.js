@@ -140,6 +140,7 @@ module.exports = {
   remove,
   getByPreferences,
   User,
+  createImage,
   getImages,
   Photo
 };
