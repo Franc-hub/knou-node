@@ -4,19 +4,20 @@ const multer = require('multer');
 const upload = multer();
 const router = Router();
 
-router.route('/')
-    .get(usersController.getAll)
-    .post(usersController.create);
+router.route('/').get(usersController.getAll).post(usersController.create);
+
+router.route('/:id/test').post(usersController.getUsersByPreferences);
 
 router
-    .route('/:id')
-    .get(usersController.getOne)
-    .put(usersController.update)
-    .delete(usersController.remove);
+  .route('/:id')
+  .get(usersController.getOne)
+  .put(usersController.update)
+  .delete(usersController.remove);
 
 router
     .route('/:id/photos')
     .put(upload.single("photo"), usersController.uploadPhoto)
     .get(usersController.getByUser);
+
 
 module.exports = router;
