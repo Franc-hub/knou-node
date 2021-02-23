@@ -6,7 +6,6 @@ const cors = require('cors');
 const jwt = require('express-jwt');
 const dotenv = require("dotenv");
 const mongo = require("./config/mongo");
-
 //routers
 const usersRouter = require('./resources/users/users.router');
 const authRouter = require('./resources/auth/auth.router');
@@ -14,6 +13,7 @@ const dislikeRouter = require ('./resources/dislike/dislike.router');
 //app
 dotenv.config();
 const app = express();
+
 app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
