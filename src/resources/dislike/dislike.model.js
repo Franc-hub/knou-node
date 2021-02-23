@@ -2,15 +2,19 @@ const mongoose = require('mongoose');
 
 //Define model schema
 const DislikeSchema = mongoose.Schema({
-  sender: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'UserModel',
-  },
-  receiver: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'UserModel',
-  },
-  created: mongoose.Schema.Types.Date,
+
+
+    sender: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'UserModel',
+    },
+    receiver
+        : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'UserModel',
+    },
+    created: mongoose.Schema.Types.Date
+
 });
 
 const Dislike = mongoose.model('DislikeModel', DislikeSchema);
@@ -31,13 +35,17 @@ const create = async (dislike) => {
 
 //get (get one)
 const get = async (id) => {
+
   let query = { _id: id };
   return await Dislike.findOne(query); /* .populate('giving', 'receiving'); */
+
 };
 
 //get (get all)
 const all = async () => {
+
   return await Dislike.find(); /* .populate('giving', 'receiving'); */
+
 };
 // update
 const update = (id, updatedislike) => {

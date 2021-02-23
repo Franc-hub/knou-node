@@ -4,8 +4,10 @@ const morgan = require('morgan');
 const config = require('./config.js');
 const cors = require('cors');
 const jwt = require('express-jwt');
+
 const dotenv = require('dotenv');
 const mongo = require('./config/mongo');
+
 
 //routers
 const usersRouter = require('./resources/users/users.router');
@@ -16,6 +18,7 @@ const likeRouter = require('./resources/like/like.router');
 //app
 dotenv.config();
 const app = express();
+
 app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
