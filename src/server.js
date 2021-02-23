@@ -9,6 +9,7 @@ const mongo = require("./config/mongo");
 //routers
 const usersRouter = require('./resources/users/users.router');
 const authRouter = require('./resources/auth/auth.router');
+const dislikeRouter = require ('./resources/dislike/dislike.router');
 //app
 dotenv.config();
 const app = express();
@@ -20,6 +21,7 @@ app.use(morgan('dev'));
 app.disable('x-powered-by');
 
 //endpoints
+app.use('/api/dislike', dislikeRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 //token

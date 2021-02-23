@@ -29,6 +29,7 @@ const getOne = async (req, res) => {
 
 //update user
 const update = (req, res) => {
+    
     const updateduser = req.body;
     const usersUpdated = userModel.update(req.params.id, updateduser)
     return res.status(200).json(usersUpdated);
