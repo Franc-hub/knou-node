@@ -27,6 +27,9 @@ const PhotoSchema = mongoose.Schema({
         ref: 'UserModel',
     },
     photo: mongoose.Schema.Types.Buffer,
+    name :mongoose.Schema.Types.String,
+    size :mongoose.Schema.Types.Number,
+    mimeType: mongoose.Schema.Types.String,
     updated: mongoose.Schema.Types.Date,
     created: mongoose.Schema.Types.Date
 });

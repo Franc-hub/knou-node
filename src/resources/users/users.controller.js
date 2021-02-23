@@ -43,7 +43,10 @@ const remove = (req, res) => {
 const uploadPhoto = async (req, res) => {
     const imgToUpload = await userModel.createImage({
         photo: req.file.buffer,
-        user: req.params.id
+        user: req.params.id,
+        name: req.file.name,
+        size:req.file.size,
+        mimeType: req.file.mimeType
     });
 
     const photos = await userModel.getImages(req.params.id);
