@@ -1,10 +1,7 @@
-
-const userModel = require('./users.model')
+const userModel = require('./users.model');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 const upload = multer();
-
-
 
 //create user
 const create = async (req, res) => {
@@ -61,26 +58,26 @@ const getUsersByPreferences = async (req, res) => {
 };
 
 const uploadPhoto = async (req, res) => {
-    const imgToUpload = await userModel.createImage({
-        photo: req.file.buffer,
-        user: req.params.id,
-        name: req.file.name,
-        size:req.file.size,
-        mimeType: req.file.mimeType
-    });
+  const imgToUpload = await userModel.createImage({
+    photo: req.file.buffer,
+    user: req.params.id,
+    name: req.file.name,
+    size: req.file.size,
+    mimetype: req.file.mimetype,
+  });
 
-    const photos = await userModel.getImages(req.params.id);
-    
-    // Iterate over each image to convert the buffer array into a base64 string
-    all = photos.map(photo => {
-        return {
-            image: photo.photo.toString('base64')
-        };
-    });
-    console.log(all);
+  const photos = await userModel.getImages(req.params.id);
 
-    return res.status(200).json(all);
-}
+  // Iterate over each image to convert the buffer array into a base64 string
+  all = photos.map((photo) => {
+    return {
+      image: photo.photo.toString('base64'),
+    };
+  });
+  console.log(all);
+
+  return res.status(200).json(all);
+};
 
 //updated photos
 /* const updatePhotos = async (req, res) => {
@@ -99,19 +96,14 @@ const uploadPhoto = async (req, res) => {
         }
     }); */
 
-
 const getByUser = async (req, res) => {
-    const photos = await userModel.getImages(req.params.id);
-    if (photos) {
-        console.log(photos);
-        return res.status(200).json(photos);
-    }
-    return res.status(404).end();
+  const photos = await userModel.getImages(req.params.id);
+  if (photos) {
+    console.log(photos);
+    return res.status(200).json(photos);
+  }
+  return res.status(404).end();
 };
-
-
-
-
 
 /*  const cloudinary = require('cloudinary').v2;
 cloudinary.config({ 
@@ -134,17 +126,14 @@ cloudinary.config({
 
   console.log(responses); */
 
-
 module.exports = {
-
   create,
   update,
   getAll,
   getOne,
   remove,
   getUsersByPreferences,
-      uploadPhoto,
-    getByUser
+  uploadPhoto,
+  getByUser,
   // getRandom,
-
 };

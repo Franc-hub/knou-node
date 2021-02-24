@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 // Define model schema
 const UserSchema = mongoose.Schema({
-
   firstname: mongoose.Schema.Types.String,
   lastname: mongoose.Schema.Types.String,
   email: mongoose.Schema.Types.String,
@@ -17,15 +16,13 @@ const UserSchema = mongoose.Schema({
   distance_range: mongoose.Schema.Types.Number,
   hobbies: mongoose.Schema.Types.Array,
   photos: {
-    type: mongoose.Schema.Types.ObjectId&&Array,
-    ref: 'PhotoModel'
-  }
-  ,
+    type: mongoose.Schema.Types.ObjectId && Array,
+    ref: 'PhotoModel',
+  },
   created: mongoose.Schema.Types.Date,
   updated: mongoose.Schema.Types.Date,
   signup_step: mongoose.Schema.Types.Number,
   signup_completed: mongoose.Schema.Types.Boolean,
-
 });
 const PhotoSchema = mongoose.Schema({
   user: {
@@ -35,9 +32,9 @@ const PhotoSchema = mongoose.Schema({
   photo: mongoose.Schema.Types.Buffer,
   name: mongoose.Schema.Types.String,
   size: mongoose.Schema.Types.Number,
-  mimeType: mongoose.Schema.Types.String,
+  mimetype: mongoose.Schema.Types.String,
   updated: mongoose.Schema.Types.Date,
-  created: mongoose.Schema.Types.Date
+  created: mongoose.Schema.Types.Date,
 });
 
 const Photo = mongoose.model('PhotoModel', PhotoSchema);
@@ -58,19 +55,18 @@ const create = async (user) => {
 const createImage = async (photo) => {
   return await Photo.create(photo, function (err, docs) {
     if (err) {
-      console.log(err)
-    }
-    else {
+      console.log(err);
+    } else {
       console.log('Created Docs : ', docs);
       return docs;
     }
   });
-}
+};
 
 const getImages = async (user) => {
   let query = { user: user };
-  return await Photo.find(query)
-}
+  return await Photo.find(query);
+};
 //get (get one)
 const get = async (id) => {
   let query = { _id: id };
@@ -136,7 +132,6 @@ const getByPreferences = (gender, orientation, ageRange) => {
 };
 
 module.exports = {
-
   create,
   get,
   all,
@@ -146,5 +141,5 @@ module.exports = {
   User,
   createImage,
   getImages,
-  Photo
+  Photo,
 };
