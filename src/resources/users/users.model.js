@@ -16,7 +16,11 @@ const UserSchema = mongoose.Schema({
   location: mongoose.Schema.Types.Array,
   distance_range: mongoose.Schema.Types.Number,
   hobbies: mongoose.Schema.Types.Array,
-  photos: mongoose.Schema.Types.Array,
+  photos: {
+    type: mongoose.Schema.Types.ObjectId&&Array,
+    ref: 'PhotoModel'
+  }
+  ,
   created: mongoose.Schema.Types.Date,
   updated: mongoose.Schema.Types.Date,
   signup_step: mongoose.Schema.Types.Number,
@@ -24,19 +28,19 @@ const UserSchema = mongoose.Schema({
 
 });
 const PhotoSchema = mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserModel',
-    },
-    photo: mongoose.Schema.Types.Buffer,
-    name :mongoose.Schema.Types.String,
-    size :mongoose.Schema.Types.Number,
-    mimeType: mongoose.Schema.Types.String,
-    updated: mongoose.Schema.Types.Date,
-    created: mongoose.Schema.Types.Date
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'UserModel',
+  },
+  photo: mongoose.Schema.Types.Buffer,
+  name: mongoose.Schema.Types.String,
+  size: mongoose.Schema.Types.Number,
+  mimeType: mongoose.Schema.Types.String,
+  updated: mongoose.Schema.Types.Date,
+  created: mongoose.Schema.Types.Date
 });
 
-const Photo = mongoose.model('PhotoModel',PhotoSchema);
+const Photo = mongoose.model('PhotoModel', PhotoSchema);
 const User = mongoose.model('UserModel', UserSchema);
 
 //create
@@ -52,20 +56,20 @@ const create = async (user) => {
 };
 
 const createImage = async (photo) => {
-    return await Photo.create(photo, function (err, docs) {
-        if (err) {
-            console.log(err)
-        }
-        else {
-            console.log('Created Docs : ', docs);
-            return docs;
-        }
-    });
+  return await Photo.create(photo, function (err, docs) {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      console.log('Created Docs : ', docs);
+      return docs;
+    }
+  });
 }
 
-const getImages = async (user) =>{
-    let query = { user: user };
-    return await Photo.find(query)
+const getImages = async (user) => {
+  let query = { user: user };
+  return await Photo.find(query)
 }
 //get (get one)
 const get = async (id) => {
