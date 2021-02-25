@@ -12,7 +12,10 @@ const UserSchema = mongoose.Schema({
   gender: mongoose.Schema.Types.String,
   orientation: mongoose.Schema.Types.String,
   description: mongoose.Schema.Types.String,
-  location: mongoose.Schema.Types.Array,
+  location: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'GeoModel',
+  },
   distance_range: mongoose.Schema.Types.Number,
   hobbies: mongoose.Schema.Types.Array,
   photos: {
@@ -24,6 +27,19 @@ const UserSchema = mongoose.Schema({
   signup_step: mongoose.Schema.Types.Number,
   signup_completed: mongoose.Schema.Types.Boolean,
 });
+
+
+const GeoSchema = mongoose.Schema({
+  type: {
+    type: mongoose.Schema.Types.String,
+    default: "Point"
+  },
+  cordinates: {
+    type: [Number], //  Thats the same like mongoose.Schema.Types.Array && Number??
+    index: "2dsphere"
+  }
+})
+
 const PhotoSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -36,7 +52,7 @@ const PhotoSchema = mongoose.Schema({
   updated: mongoose.Schema.Types.Date,
   created: mongoose.Schema.Types.Date,
 });
-
+const Geo = mongoose.model('GeoModel', GeoSchema);
 const Photo = mongoose.model('PhotoModel', PhotoSchema);
 const User = mongoose.model('UserModel', UserSchema);
 
@@ -142,4 +158,5 @@ module.exports = {
   createImage,
   getImages,
   Photo,
+  Geo
 };
