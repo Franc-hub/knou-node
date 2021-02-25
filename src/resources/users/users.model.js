@@ -79,6 +79,17 @@ const createImage = async (photo) => {
   });
 };
 
+const createGeo = async (photo) => {
+  return await Geo.create(photo, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Created Docs : ', docs);
+      return docs;
+    }
+  });
+};
+
 const getImages = async (user) => {
   let query = { user: user };
   return await Photo.find(query);
@@ -118,7 +129,7 @@ const remove = (id) => {
   });
 };
 
-const getByPreferences = (gender, orientation, ageRange) => {
+const getByPreferences = (gender, orientation, ageRange,location) => {
   const [lowerAge, higherAge] = ageRange;
   let query = {
     gender: gender,
@@ -158,5 +169,6 @@ module.exports = {
   createImage,
   getImages,
   Photo,
+  createGeo,
   Geo
 };
