@@ -19,5 +19,9 @@ router
     .put(upload.single("photo"), usersController.uploadPhoto)
     .get(usersController.getByUser);
 
+router
+.route('/geo').post(usersController.createGeoLocation);
+
+
 
 module.exports = router;

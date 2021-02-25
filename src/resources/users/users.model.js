@@ -133,6 +133,8 @@ const remove = (id) => {
 
 const getByPreferences = (gender, orientation, ageRange,location) => {
   const [lowerAge, higherAge] = ageRange;
+  let geoQuery = User.find({location:{$near:{$geometry:{geometry:{coordinates:{type:['${location}']}}}}}});
+  geoquery.location;
   let query = {
     gender: gender,
     orientation: orientation,

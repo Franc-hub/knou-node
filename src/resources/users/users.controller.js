@@ -105,6 +105,13 @@ const getByUser = async (req, res) => {
   return res.status(404).end();
 };
 
+const createGeoLocation = async (req, res) => {
+  const newgeo = req.body;
+  const geoUpdated = await User.createGeo(newuser);
+  return res.status(201).json(geoUpdated);
+};
+
+
 /*  const cloudinary = require('cloudinary').v2;
 cloudinary.config({ 
     cloud_name: "dcxuyxqvo", 
@@ -135,5 +142,6 @@ module.exports = {
   getUsersByPreferences,
   uploadPhoto,
   getByUser,
+  createGeoLocation
   // getRandom,
 };
