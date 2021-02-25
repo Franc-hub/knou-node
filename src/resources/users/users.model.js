@@ -24,20 +24,7 @@ const UserSchema = mongoose.Schema({
   signup_step: mongoose.Schema.Types.Number,
   signup_completed: mongoose.Schema.Types.Boolean,
 });
-const PhotoSchema = mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'UserModel',
-  },
-  photo: mongoose.Schema.Types.Buffer,
-  name: mongoose.Schema.Types.String,
-  size: mongoose.Schema.Types.Number,
-  mimetype: mongoose.Schema.Types.String,
-  updated: mongoose.Schema.Types.Date,
-  created: mongoose.Schema.Types.Date,
-});
 
-const Photo = mongoose.model('PhotoModel', PhotoSchema);
 const User = mongoose.model('UserModel', UserSchema);
 
 //create
@@ -52,21 +39,7 @@ const create = async (user) => {
   });
 };
 
-const createImage = async (photo) => {
-  return await Photo.create(photo, function (err, docs) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('Created Docs : ', docs);
-      return docs;
-    }
-  });
-};
 
-const getImages = async (user) => {
-  let query = { user: user };
-  return await Photo.find(query);
-};
 //get (get one)
 const get = async (id) => {
   let query = { _id: id };
@@ -108,6 +81,7 @@ const getByPreferences = (gender, orientation, ageRange) => {
     gender: gender,
     orientation: orientation,
     age: { $gt: lowerAge, $lt: higherAge },
+
     //faltan por localizacion y rango
   };
 
@@ -138,8 +112,5 @@ module.exports = {
   update,
   remove,
   getByPreferences,
-  User,
-  createImage,
-  getImages,
-  Photo,
+  User
 };
