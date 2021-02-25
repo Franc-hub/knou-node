@@ -30,15 +30,17 @@ const UserSchema = mongoose.Schema({
 
 
 const GeoSchema = mongoose.Schema({
-  type: {
-    type: mongoose.Schema.Types.String,
-    default: "Point"
-  },
-  cordinates: {
-    type: [Number], //  Thats the same like mongoose.Schema.Types.Array && Number??
-    index: "2dsphere"
+  geometry:{
+    type:{
+      type: String,
+      default: "Point"
+    },
+    coordinates:{
+      type: [Number],
+      index: "2dsphere"
+    }
   }
-})
+});
 
 const PhotoSchema = mongoose.Schema({
   user: {
