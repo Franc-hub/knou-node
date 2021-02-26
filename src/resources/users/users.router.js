@@ -11,7 +11,7 @@ router.route('/')
   // username must be an email
   body('email').isEmail(),
   // password must be at least 5 chars long
-  body('password').isLength({ min: 10 }),
+  body('password').isLength({ min: 5}).withMessage('must be at least 5 chars long'),
   usersController.create);
 
 router.route('/:id/test')
