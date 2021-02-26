@@ -1,14 +1,24 @@
 const userModel = require('./users.model');
-const cloudinary = require('cloudinary').v2;
-const multer = require('multer');
-const upload = multer();
+/* const cloudinary = require('cloudinary').v2; */
+/* const multer = require('multer');
+const upload = multer(); */
+const { validationResult } = require('express-validator');
+
 
 //create user
-const create = async (req, res) => {
+const create = (req, res) => {
+  // Finds the validation errors in this request and wraps them in an object with handy functions
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log('Received validation errors', errors.array());
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const newuser = req.body;
-  const usersUpdated = await userModel.create(newuser);
+  const usersUpdated = userModel.create(newuser);
   return res.status(201).json(usersUpdated);
 };
+
 
 //get all users
 const getAll = async (req, res) => {
