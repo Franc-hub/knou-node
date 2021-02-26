@@ -107,8 +107,8 @@ const getByUser = async (req, res) => {
 
 const createGeoLocation = async (req, res) => {
   const newgeo = req.body;
-  const geoUpdated = await User.createGeo(newuser);
-  return res.status(201).json(geoUpdated);
+  const geoUpdated = await User.createGeo(geoUpdated);
+  return res.status(201).json(newgeo);
 };
 
 
