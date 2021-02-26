@@ -13,8 +13,12 @@ const UserSchema = mongoose.Schema({
   orientation: mongoose.Schema.Types.String,
   description: mongoose.Schema.Types.String,
   location: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'GeoModel',
+    type: {
+      type: String,
+      default: "Point",
+      index:"2dsphere"
+    },
+    coordinates:[mongoose.Schema.Types.Number],
   },
   distance_range: mongoose.Schema.Types.Number,
   hobbies: mongoose.Schema.Types.Array,
@@ -29,7 +33,7 @@ const UserSchema = mongoose.Schema({
 });
 
 
-const GeoSchema = mongoose.Schema({
+/* const GeoSchema = mongoose.Schema({
   geometry:{
     type:{
       type: String,
@@ -37,10 +41,10 @@ const GeoSchema = mongoose.Schema({
     },
     coordinates:{
       type: [Number],
-      index: "2dsphere"
+  
     }
   }
-});
+}); */
 
 const PhotoSchema = mongoose.Schema({
   user: {
@@ -54,7 +58,7 @@ const PhotoSchema = mongoose.Schema({
   updated: mongoose.Schema.Types.Date,
   created: mongoose.Schema.Types.Date,
 });
-const Geo = mongoose.model('GeoModel', GeoSchema);
+/* const Geo = mongoose.model('GeoModel', GeoSchema); */
 const Photo = mongoose.model('PhotoModel', PhotoSchema);
 const User = mongoose.model('UserModel', UserSchema);
 
@@ -131,17 +135,40 @@ const remove = (id) => {
   });
 };
 
-const getByPreferences = (gender, orientation, ageRange,location) => {
+const getByPreferences = (gender, orientation, ageRange, coordinates, maxRange) => {
   const [lowerAge, higherAge] = ageRange;
-  let geoQuery = {
-    location : location
+ /*  User.find({
+    location: {
+     $near: {
+      $maxDistance: maxRange,
+      $geometry: {
+       type: "Point",
+       coordinates: [coordinates[0],coordinates[1]]
+      }
+     }
+    }
+   }).find((error, results) => {
+    if (error) console.log(error);
+    console.log(JSON.stringify(results, 0, 2));
+   }); */
+  /*  let geoQuery = {
+    location: location
   }
   locqationgeoQuery.location;
-  User.find({location:{$near:{$geometry:{geometry:{coordinates:{type:['${location}']}}}}}});
+  User.find({ location: { $near: { $geometry: { geometry: { coordinates: { type: ['${location}'] } } } } } }); */
   let query = {
     gender: gender,
     orientation: orientation,
     age: { $gt: lowerAge, $lt: higherAge },
+    location: {
+      $near: {
+       $maxDistance: maxRange,
+       $geometry: {
+        type: "Point",
+        coordinates: [coordinates[0],coordinates[1]]
+       }
+      }
+     }
     //faltan por localizacion y rango
   };
 
@@ -160,7 +187,15 @@ const getByPreferences = (gender, orientation, ageRange,location) => {
   } else {
     return User.find({
       orientation: { $in: ['homosexual', 'heterosexual', 'bisexual'] },
-      age: { $gt: lowerAge, $lt: higherAge },
+      age: { $gt: lowerAge, $lt: higherAge },location: {
+        $near: {
+         $maxDistance: maxRange,
+         $geometry: {
+          type: "Point",
+          coordinates: [coordinates[0],coordinates[1]]
+         }
+        }
+       }
     });
   }
 };
@@ -177,5 +212,5 @@ module.exports = {
   getImages,
   Photo,
   createGeo,
-  Geo
+  /* Geo */
 };

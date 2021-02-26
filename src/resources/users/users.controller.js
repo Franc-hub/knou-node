@@ -48,11 +48,14 @@ const getUsersByPreferences = async (req, res) => {
   const sexualOrientation = req.body.orientation;
   const gender = req.body.gender;
   const ageRange = req.body.age_range;
-
+  const coordinates = req.body.coordinates;
+  const maxRange = req.body.distance_range;
   const matchedUsers = await userModel.getByPreferences(
     gender,
     sexualOrientation,
-    ageRange
+    ageRange,
+    coordinates,
+    maxRange
   );
   return res.status(200).json(matchedUsers);
 };
