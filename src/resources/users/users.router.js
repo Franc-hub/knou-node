@@ -27,6 +27,6 @@ router
     .route('/:id/photos')
     .put(upload.single("photo"), usersController.uploadPhoto)
     .get(usersController.getByUser);
-
+  
 
 module.exports = router;
