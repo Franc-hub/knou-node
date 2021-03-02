@@ -2,7 +2,7 @@ const userModel = require('./users.model');
 /* const cloudinary = require('cloudinary').v2; */
 /* const multer = require('multer');
 const upload = multer(); */
-const { validationResult } = require('express-validator');
+const { validationResult,check } = require('express-validator');
 
 
 //create user
@@ -38,6 +38,12 @@ const getOne = async (req, res) => {
 
 //update user
 const update = (req, res) => {
+  const errors = validationResult(req);
+  if(req.body.age <= 17);
+  if (!errors.isEmpty()) {
+    console.log('Received validation errors', errors.array());
+    return res.status(400).json({ errors: errors.array() });
+  }
   const updateduser = req.body;
   const usersUpdated = userModel.update(req.params.id, updateduser);
   return res.status(200).json(usersUpdated);
