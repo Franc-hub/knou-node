@@ -40,4 +40,5 @@ const get = async (id) => {
     create,
     get,
     all,
+    Chat
 };
