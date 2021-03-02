@@ -102,9 +102,10 @@ const remove = (id) => {
   });
 };
 
-const getByPreferences = (gender, orientation, ageRange) => {
+const getByPreferences = (gender, orientation, ageRange, userId) => {
   const [lowerAge, higherAge] = ageRange;
   let query = {
+    _id: { $not: { $eq: userId } },
     gender: gender,
     orientation: orientation,
     age: { $gt: lowerAge, $lt: higherAge },
@@ -125,6 +126,7 @@ const getByPreferences = (gender, orientation, ageRange) => {
     return User.find(query);
   } else {
     return User.find({
+      _id: { $not: { $eq: userId } },
       orientation: { $in: ['homosexual', 'heterosexual', 'bisexual'] },
       age: { $gt: lowerAge, $lt: higherAge },
     });

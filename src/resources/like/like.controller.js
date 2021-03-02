@@ -18,9 +18,8 @@ const create = async (req, res) => {
     };
 
     const matchCreated = matchModel.create(newMatch);
-
     console.log(`matched with ${receiver}`);
-    return res.status(201).json(matchCreated);
+    return res.status(201).json(newMatch);
   } else {
     console.log('no match, try again...');
   }
