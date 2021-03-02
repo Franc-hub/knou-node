@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
 // Define model schema
-
 const MessageSchema = ({
     sender: {
-        type: mongoose.Schema.Types.ObjectId && Date,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'UserModel',
         created: mongoose.Schema.Types.Date,
     },
