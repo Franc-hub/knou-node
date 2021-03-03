@@ -81,6 +81,7 @@ const getByPreferences = (gender, orientation, ageRange) => {
     gender: gender,
     orientation: orientation,
     age: { $gt: lowerAge, $lt: higherAge },
+    _id: { $not: { $eq: userId } },
 
     //faltan por localizacion y rango
   };
@@ -101,6 +102,7 @@ const getByPreferences = (gender, orientation, ageRange) => {
     return User.find({
       orientation: { $in: ['homosexual', 'heterosexual', 'bisexual'] },
       age: { $gt: lowerAge, $lt: higherAge },
+      _id: { $not: { $eq: userId } }
     });
   }
 };
