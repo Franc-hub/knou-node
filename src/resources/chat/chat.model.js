@@ -2,43 +2,49 @@ const mongoose = require('mongoose');
 
 // Define model schema
 
-const ChatSchema = ({
-    match: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'MatchModel',
-    },
-    updated: mongoose.Schema.Types.Date,
-    created: mongoose.Schema.Types.Date,
-})
+const ChatSchema = {
+  match: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'MatchModel',
+  },
+  updated: mongoose.Schema.Types.Date,
+  created: mongoose.Schema.Types.Date,
+};
 
-const Chat  = mongoose.model('ChatModel',ChatSchema);
+const Chat = mongoose.model('ChatModel', ChatSchema);
 
 //create
 const create = async (chat) => {
-    return await Chat.create(chat, function (err, docs) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Created Docs : ', docs);
-        return docs;
-      }
-    });
-  };
+  return await Chat.create(chat, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Created Docs : ', docs);
+      return docs;
+    }
+  });
+};
 
-  //get (get one)
+//get (get one)
 const get = async (id) => {
-    let query = { _id: id };
-    return await Chat.findOne(query);
-  };
-  
-  //get (get all)
-  const all = async () => {
-    return await Chat.find();
-  };
+  let query = { match: id };
+  return await Chat.findOne(query);
+};
 
-  module.exports = {
-    create,
-    get,
-    all,
-    Chat
+//get (get all)
+const all = async () => {
+  return await Chat.find();
+};
+
+const chatsByMatchId = async (id) => {
+  let query = { match: id };
+  return await Chat.find(query);
+};
+
+module.exports = {
+  create,
+  get,
+  all,
+  Chat,
+  chatsByMatchId,
 };

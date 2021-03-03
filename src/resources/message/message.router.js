@@ -4,8 +4,8 @@ const router = Router();
 
 router.route('/').get(messageController.getAll).post(messageController.create);
 
-router
-  .route('/:id')
-  .get(messageController.getOne)
+router.route('/:id').get(messageController.getOne);
 
-  module.exports = router;
+router.route('/:id/chat').get(messageController.getMessagesByChatId);
+
+module.exports = router;
