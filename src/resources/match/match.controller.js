@@ -3,7 +3,6 @@ const matchModel = require('./match.model');
 const create = async (req, res) => {
   const newMatch = req.body;
   const matchUpdated = matchModel.create(newMatch);
-
   return res.status(201).json(matchUpdated);
 };
 
@@ -32,10 +31,16 @@ const remove = (req, res) => {
   return res.status(200).json({ message: 'Match deleted' });
 };
 
+const getMatchesById = async (req, res) => {
+  const matchesOfUser = await matchModel.allMatchesOfUserId(req.params.id);
+  return res.status(200).json(matchesOfUser);
+};
+
 module.exports = {
   getAll,
   getOne,
   create,
   update,
   remove,
+  getMatchesById,
 };

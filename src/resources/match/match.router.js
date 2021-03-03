@@ -10,4 +10,6 @@ router
   .put(matchController.update)
   .delete(matchController.remove);
 
+router.route('/:id/matches').get(matchController.getMatchesById);
+
 module.exports = router;
