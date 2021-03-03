@@ -13,9 +13,13 @@ const usersRouter = require('./resources/users/users.router');
 const authRouter = require('./resources/auth/auth.router');
 const dislikeRouter = require('./resources/dislike/dislike.router');
 const likeRouter = require('./resources/like/like.router');
+
 const chatRouter = require('./resources/chat/chat.router');
 const messageRouter = require('./resources/message/message.router');
 const matchRouter = require('./resources/match/match.router');
+
+const photoRouter = require ('./resources/photo/photo.router');
+
 //app
 dotenv.config();
 const app = express();
@@ -31,9 +35,13 @@ app.use('/api/dislike', dislikeRouter);
 app.use('/api/like', likeRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
+
 app.use('/api/chat', chatRouter);
 app.use('/api/messages', messageRouter);
 app.use('/api/match', matchRouter);
+
+app.use('/api/photo', photoRouter);
+
 //token
 app.get(
   '/protected',
