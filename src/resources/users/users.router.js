@@ -23,10 +23,5 @@ router
   .put(usersController.update)
   .delete(usersController.remove);
 
-router
-    .route('/:id/photos')
-    .put(upload.single("photo"), usersController.uploadPhoto)
-    .get(usersController.getByUser);
-
 
 module.exports = router;
