@@ -6,7 +6,7 @@ const router = Router();
 
 router.route('/').get(usersController.getAll).post(usersController.create);
 
-router.route('/:id/test').post(usersController.getUsersByPreferences);
+router.route('/:id/candidates').get(usersController.getUsersByPreferences);
 
 router
   .route('/:id')

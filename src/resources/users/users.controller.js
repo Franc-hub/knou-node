@@ -45,17 +45,14 @@ const remove = (req, res) => {
 // };
 
 const getUsersByPreferences = async (req, res) => {
-  const sexualOrientation = req.body.orientation;
-  const gender = req.body.gender;
-  const ageRange = req.body.age_range;
-  const coordinates = req.body.coordinates;
-  const maxRange = req.body.distance_range;
+  req.params.distance_range
+  const user = await userModel.get(req.params.id);
   const matchedUsers = await userModel.getByPreferences(
-    gender,
-    sexualOrientation,
-    ageRange,
-    coordinates,
-    maxRange
+    user.gender,
+    user.orientation,
+    user.age_range,
+    user.location.coordinates,
+    user.distance_range
   );
   return res.status(200).json(matchedUsers);
 };

@@ -187,7 +187,8 @@ const getByPreferences = (gender, orientation, ageRange, coordinates, maxRange) 
   } else {
     return User.find({
       orientation: { $in: ['homosexual', 'heterosexual', 'bisexual'] },
-      age: { $gt: lowerAge, $lt: higherAge },location: {
+      age: { $gt: lowerAge, $lt: higherAge },
+      location: {
         $near: {
          $maxDistance: maxRange,
          $geometry: {
