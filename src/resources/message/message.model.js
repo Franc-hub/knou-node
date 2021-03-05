@@ -46,10 +46,16 @@ const allMessagesByChatId = async (id) => {
   return await Message.find(query);
 };
 
+const lastMessageOfChatId = async (id) => {
+  let query = { chat: id };
+  return await Message.find(query).sort({ date: -1 }).limit(1);
+};
+
 module.exports = {
   create,
   get,
   all,
   Message,
   allMessagesByChatId,
+  lastMessageOfChatId,
 };
