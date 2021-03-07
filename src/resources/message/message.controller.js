@@ -4,10 +4,13 @@ const chatModel = require('../chat/chat.model');
 // create
 const create = async (req, res) => {
   const newMessage = req.body;
+
   const messageUpdated = messageModel.create(newMessage);
 
   return res.status(201).json(messageUpdated);
 };
+
+const createByMatchId = async (req, res) => {};
 
 //get all
 const getAll = async (req, res) => {
