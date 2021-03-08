@@ -57,7 +57,7 @@ const getUsersByPreferences = async (req, res) => {
 
   const matchedUsers = await userModel.getByPreferences(
     user.gender,
-    user.sexualOrientation,
+    user.orientation,
     user.age_range,
     user._id
   );

@@ -76,6 +76,7 @@ const remove = (id) => {
 
 const getByPreferences = (gender, orientation, ageRange, userId) => {
   const [lowerAge, higherAge] = ageRange;
+
   let query = {
     gender: gender,
     orientation: orientation,
