@@ -36,10 +36,10 @@ app.use('/api/like', likeRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 
+
 app.use('/api/chat', chatRouter);
 app.use('/api/messages', messageRouter);
 app.use('/api/match', matchRouter);
-
 app.use('/api/photo', photoRouter);
 
 //token

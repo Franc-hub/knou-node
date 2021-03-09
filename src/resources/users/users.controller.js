@@ -1,6 +1,8 @@
 const userModel = require('./users.model');
 
 const { validationResult } = require('express-validator');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SG_API_KEY);
 
 
 
@@ -12,10 +14,25 @@ const create = (req, res) => {
     console.log('Received validation errors', errors.array());
     return res.status(400).json({ errors: errors.array() });
   }
-
   const newuser = req.body;
   const usersUpdated = userModel.create(newuser);
-  return res.status(201).json(usersUpdated);
+  const msg = {
+        to: newuser.email,
+        from: {
+            email: 'raul.salcedo03@hotmail.com',
+            name: 'knou proyect'
+        },
+        subject: 'thank you for choosing knou',
+        text: `Hi! dear ${newuser.firstname} welcome to knou`,
+    };
+    sgMail.send(msg)
+    .then(()=> {
+        console.log('Email sent');
+    })
+    .catch ((error) => {
+        console.log(error);
+    });
+    return res.status(201).json(usersUpdated);
 };
 
 
