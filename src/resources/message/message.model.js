@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const chatModel = require('../chat/chat.model');
 
 // Define model schema
 const MessageSchema = {
@@ -20,6 +21,11 @@ const Message = mongoose.model('MessageModel', MessageSchema);
 
 //create
 const create = async (message) => {
+  const chat = await chatModel.chatsByMatchId(message.chat);
+
+  message.chat = chat[0]._id;
+  console.log(message);
+
   return await Message.create(message, function (err, docs) {
     if (err) {
       console.log(err);
@@ -43,7 +49,12 @@ const all = async () => {
 
 const allMessagesByChatId = async (id) => {
   let query = { chat: id };
-  return await Message.find(query);
+  return await Message.find(query).populate('sender', 'firstname');
+};
+
+const lastMessageOfChatId = async (id) => {
+  let query = { chat: id };
+  return await Message.find(query).sort({ date: -1 }).limit(1);
 };
 
 module.exports = {
@@ -52,4 +63,5 @@ module.exports = {
   all,
   Message,
   allMessagesByChatId,
+  lastMessageOfChatId,
 };

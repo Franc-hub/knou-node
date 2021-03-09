@@ -61,8 +61,13 @@ const update = (id, updateMatch) => {
 };
 
 const allMatchesOfUserId = async (id) => {
-  let query = { userOne: id };
-  return await Match.find(query).populate('userTwo', 'firstname');
+  let query = {
+    $or: [{ userOne: id }, { userTwo: id }],
+  }; //{ userOne: id };
+
+  return await Match.find(query)
+    .populate('userTwo', 'firstname')
+    .populate('userOne', 'firstname');
 };
 
 module.exports = {

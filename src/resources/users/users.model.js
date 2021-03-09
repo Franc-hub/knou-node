@@ -39,7 +39,6 @@ const create = async (user) => {
   });
 };
 
-
 //get (get one)
 const get = async (id) => {
   let query = { _id: id };
@@ -75,8 +74,9 @@ const remove = (id) => {
   });
 };
 
-const getByPreferences = (gender, orientation, ageRange) => {
+const getByPreferences = (gender, orientation, ageRange, userId) => {
   const [lowerAge, higherAge] = ageRange;
+
   let query = {
     gender: gender,
     orientation: orientation,
@@ -102,7 +102,7 @@ const getByPreferences = (gender, orientation, ageRange) => {
     return User.find({
       orientation: { $in: ['homosexual', 'heterosexual', 'bisexual'] },
       age: { $gt: lowerAge, $lt: higherAge },
-      _id: { $not: { $eq: userId } }
+      _id: { $not: { $eq: userId } },
     });
   }
 };
@@ -114,5 +114,5 @@ module.exports = {
   update,
   remove,
   getByPreferences,
-  User
+  User,
 };

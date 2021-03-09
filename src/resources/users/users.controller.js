@@ -4,8 +4,6 @@ const { validationResult } = require('express-validator');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SG_API_KEY);
 
-
-
 //create user
 const create = (req, res) => {
   // Finds the validation errors in this request and wraps them in an object with handy functions
@@ -34,7 +32,6 @@ const create = (req, res) => {
     });
     return res.status(201).json(usersUpdated);
 };
-
 
 //get all users
 const getAll = async (req, res) => {
@@ -71,21 +68,18 @@ const remove = (req, res) => {
 // };
 
 const getUsersByPreferences = async (req, res) => {
-  const sexualOrientation = req.body.orientation;
-  const gender = req.body.gender;
-  const ageRange = req.body.age_range;
-  const userId = req.params.id
+  const userId = req.params.id;
+
+  const user = await userModel.get(userId);
 
   const matchedUsers = await userModel.getByPreferences(
-    gender,
-    sexualOrientation,
-    ageRange,
-    userId
+    user.gender,
+    user.orientation,
+    user.age_range,
+    user._id
   );
   return res.status(200).json(matchedUsers);
 };
-
-
 
 module.exports = {
   create,
