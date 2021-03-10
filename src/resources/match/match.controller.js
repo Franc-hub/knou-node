@@ -7,7 +7,7 @@ const create = async (req, res) => {
   const newMatch = req.body;
   const matchUpdated = matchModel.create(newMatch);
   const userOne =userModel.get(req.body.userOne) ;
-  const userTwo =userModel.get(req.body.userOne) ;
+  const userTwo =userModel.get(req.body.userTwo) ;
   let msg = {
     to: userOne.email,
     from: {
