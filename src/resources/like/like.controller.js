@@ -26,7 +26,7 @@ const create = async (req, res) => {
   }
   //const match = likeModel.checkMatch;
 
-  return res.status(201).json(likeUpdated);
+  return res.status(200).json(likeUpdated);
 };
 
 //get all
