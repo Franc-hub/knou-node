@@ -1,9 +1,47 @@
 const matchModel = require('./match.model');
+const userModel = require('../users/users.model');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SG_API_KEY);
 // create
 const create = async (req, res) => {
   const newMatch = req.body;
   const matchUpdated = matchModel.create(newMatch);
+  const userOne =userModel.get(req.body.userOne) ;
+  const userTwo =userModel.get(req.body.userOne) ;
+  let msg = {
+    to: userOne.email,
+    from: {
+        email: 'raul.salcedo03@hotmail.com',
+        name: 'knou proyect'
+    },
+    subject: 'You have a new match',
+    text: `Hi! dear ${userOne.firstname} someone want to knou xd you`, //here we need a post the url of cloud aplication
+};
+sgMail.send(msg)
+.then(()=> {
+    console.log('Email sent');
+})
+.catch ((error) => {
+    console.log(error);
+});
+ msg = {
+  to: userTwo.email,
+  from: {
+      email: 'raul.salcedo03@hotmail.com',
+      name: 'knou proyect'
+  },
+  subject: 'You have a new match',
+  text: `Hi! dear ${userTwo.firstname} someone want to knou xd you`, //here we need a post the url of cloud aplication
+};
+sgMail.send(msg)
+.then(()=> {
+  console.log('Email sent');
+})
+.catch ((error) => {
+  console.log(error);
+});
   return res.status(201).json(matchUpdated);
+
 };
 
 //get all
