@@ -1,9 +1,9 @@
 const userModel = require('./users.model');
+const logo = './assets/image2.png';
 
 const { validationResult } = require('express-validator');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SG_API_KEY);
-
 //create user
 const create = (req, res) => {
   // Finds the validation errors in this request and wraps them in an object with handy functions
@@ -18,10 +18,24 @@ const create = (req, res) => {
         to: newuser.email,
         from: {
             email: 'raul.salcedo03@hotmail.com',
-            name: 'knou proyect'
+            name: 'Knou'
         },
-        subject: 'thank you for choosing knou',
-        text: `Hi! dear ${newuser.firstname} welcome to knou`,
+        subject: 'Welcome to Knou',
+        // text: `Hi! 
+        //   Dear ${newuser.firstname}! We would like to welcome to Knou, the best webApp
+        //   to meet new people from over the world.`,
+        html:`<h2>Hi ${newuser.firstname}!</h2>
+        <br></br>
+        <p>We would like to welcome to <span style="color:#8c30f5;font-weight: bold">Knou</span>, the best webApp
+        to meet new people from over the world.</p>
+        <br></br>
+        <p>Please follow the next link to finish your profile!</p>
+        <br></br>
+        <a href="https://www.google.com">
+        <img src=${logo} alt="logo" style=""width:200px;height:200px>
+        </a>
+        `
+        
     };
     sgMail.send(msg)
     .then(()=> {
