@@ -26,14 +26,16 @@ const create = (req, res) => {
         //   to meet new people from over the world.`,
         html:`<h2>Hi ${newuser.firstname}!</h2>
         <br></br>
-        <p>We would like to welcome to <span style="color:#8c30f5;font-weight: bold">Knou</span>, the best webApp
-        to meet new people from over the world.</p>
-        <br></br>
-        <p>Please follow the next link to finish your profile!</p>
-        <br></br>
-        <a href="https://www.google.com">
-        <img src=${logo} alt="logo" style=""width:200px;height:200px>
-        </a>
+        <div style="width:60%; display:flex; flex-direction:column; justify-content:center; align-items:center">
+          <p>We would like to welcome you to <span style="color:#8c30f5;font-weight: bold">Knou</span>, 
+          the best webApp to meet new people from over the world.</p>
+          <p>Please follow the next link to finish your profile and confirm your account!</p>
+          <a href="https://www.youtube.com">
+            <img src=${logo} alt="logo" style=""width:200px;height:200px>
+          </a>
+          <p style="font-weight:bold; font-style:oblique; background:#8c30f5;color:#DED3FF; border-radius:30px">New people is waiting to 
+          <span style="color:#8c30f5;font-weight:bold">Knou</span> you</p>
+        </div>
         `
         
     };
