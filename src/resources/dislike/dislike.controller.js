@@ -15,7 +15,9 @@ const getAll = async (req, res) => {
 const getOne = async (req, res) => {
   const dislike = await dislkeModel.get(req.params.id);
   if (dislike) {
-    console.log('giving', giving);
+
+    console.log('sender', sender);
+
     return res.status(200).json(dislike);
   }
   return res.status(404).end();
