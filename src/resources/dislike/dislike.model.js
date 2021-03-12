@@ -10,6 +10,7 @@ const DislikeSchema = mongoose.Schema({
     },
     receiver
         : {
+
         type: mongoose.Schema.Types.ObjectId,
         ref: 'UserModel',
     },
@@ -21,6 +22,7 @@ const Dislike = mongoose.model('DislikeModel', DislikeSchema);
 
 //create
 const create = async (dislike) => {
+
   return await Dislike.create(dislike, function (err, docs) {
     if (err) {
       console.log(err);
@@ -29,12 +31,14 @@ const create = async (dislike) => {
       return docs;
     }
   });
+
 };
 
 // Premium
 
 //get (get one)
 const get = async (id) => {
+
 
   let query = { _id: id };
   return await Dislike.findOne(query); /* .populate('giving', 'receiving'); */
@@ -43,6 +47,7 @@ const get = async (id) => {
 
 //get (get all)
 const all = async () => {
+
 
   return await Dislike.find(); /* .populate('giving', 'receiving'); */
 
@@ -66,3 +71,4 @@ module.exports = {
   update,
   Dislike,
 };
+
