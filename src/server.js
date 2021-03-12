@@ -31,6 +31,10 @@ app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.disable('x-powered-by');
+app.use('/healthcheck', (req, res) => {
+  console.log('GET healthcheck!');
+  return res.status(200).json({ message: 'OK' });
+});
 
 //endpoints
 app.use('/api/dislike', dislikeRouter);
