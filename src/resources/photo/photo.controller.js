@@ -16,6 +16,7 @@ const uploadPhoto = async (req, res) => {
     all = photos.map((photo) => {
         return {
             image: photo.photo.toString('base64'),
+            id: photo._id
         };
     });
     console.log(all);
@@ -31,7 +32,7 @@ const getByUser = async (req, res) => {
     return res.status(404).end();
 };
 const eliminatePhoto = (req, res) => {
-    const photoWithoutTheDeleted = Photo.remove(req.params.id);
+    const photoWithoutTheDeleted = Photo.remove(req.params.id._id);
     return res.status(200).json(photoWithoutTheDeleted);
   };
 
