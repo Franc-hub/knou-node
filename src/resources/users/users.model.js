@@ -107,6 +107,11 @@ const getByPreferences = (gender, orientation, ageRange, userId) => {
   }
 };
 
+const getEmail = async (email) => {
+  let query = { email: email };
+  return await User.findOne(query);
+};
+
 module.exports = {
   create,
   get,
@@ -114,5 +119,6 @@ module.exports = {
   update,
   remove,
   getByPreferences,
+  getEmail,
   User,
 };

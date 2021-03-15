@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const config = require('./config.js');
 const cors = require('cors');
 const jwt = require('express-jwt');
+const http = require('http');
 
 const dotenv = require('dotenv');
 const mongo = require('./config/mongo');
@@ -18,11 +19,20 @@ const chatRouter = require('./resources/chat/chat.router');
 const messageRouter = require('./resources/message/message.router');
 const matchRouter = require('./resources/match/match.router');
 
-const photoRouter = require ('./resources/photo/photo.router');
+const photoRouter = require('./resources/photo/photo.router');
 
 //app
 dotenv.config();
 const app = express();
+const server = http.createServer(app);
+
+const io = require('socket.io')(server, {
+  cors: {
+    origin: 'http://localhost:3001',
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
+});
 
 app.use(cors());
 app.use(json());
@@ -35,7 +45,6 @@ app.use('/api/dislike', dislikeRouter);
 app.use('/api/like', likeRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
-
 
 app.use('/api/chat', chatRouter);
 app.use('/api/messages', messageRouter);
@@ -61,6 +70,12 @@ const start = async () => {
     console.error(e);
   }
 };
+
+io.on('connect', (socket) => {
+  socket.on('join', ({ name }, callback) => {
+    console.log(`${name} joined`);
+  });
+});
 
 module.exports = {
   start,
