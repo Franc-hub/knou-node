@@ -16,6 +16,7 @@ const uploadPhoto = async (req, res) => {
     all = photos.map((photo) => {
         return {
             image: photo.photo.toString('base64'),
+            id:photo._id
         };
     });
     console.log(all);
