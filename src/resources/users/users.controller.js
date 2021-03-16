@@ -15,38 +15,47 @@ const create = (req, res) => {
   const newuser = req.body;
   const usersUpdated = userModel.create(newuser);
   const msg = {
-        to: newuser.email,
-        from: {
-            email: 'raul.salcedo03@hotmail.com',
-            name: 'Knou'
-        },
-        subject: 'Welcome to Knou',
-        // text: `Hi! 
-        //   Dear ${newuser.firstname}! We would like to welcome to Knou, the best webApp
-        //   to meet new people from over the world.`,
-        html:`<h2>Hi ${newuser.firstname}!</h2>
-        <br></br>
-        <div style="width:60%; display:flex; flex-direction:column; justify-content:center; align-items:center">
-          <p>We would like to welcome you to <span style="color:#8c30f5;font-weight: bold">Knou</span>, 
-          the best webApp to meet new people from over the world.</p>
-          <p>Please follow the next link to finish your profile and confirm your account!</p>
-          <a href="https://www.youtube.com">
-            <img src=${logo} alt="logo" style=""width:200px;height:200px>
-          </a>
-          <p style="font-weight:bold; font-style:oblique; background:#8c30f5;color:#DED3FF; border-radius:30px">New people is waiting to 
-          <span style="color:#8c30f5;font-weight:bold">Knou</span> you</p>
-        </div>
-        `
+    to: newuser.email,
+    from: {
+      email: 'raul.salcedo03@hotmail.com',
+      name: 'Knou',
+    },
+    subject: 'Welcome to Knou',
+    html: `<html lang="en">
+        <body>
+            <h2 style="color:#8c30f5;font-weight: bold;font-size:30px; font-style: oblique;">Hi ${newuser.firstname}!</h2>
+              <div style="width:100%">
+              <p style="font-size:22px;">We would like to welcome you to <span style="color:#8c30f5;font-weight: bold;font-size:30px; font-style: oblique;">Knou</span>, 
+              the best webApp to meet new people from over the world.</p>
+              <br></br>
+              <p style="font-size:22px;">Please follow the next link to finish your profile and confirm your account!</p>
+              <br></br>
+              <a href="https://hardcore-hawking-033be2.netlify.app" target="_blank" style="width:100%;height:200px;padding-top:20px;padding-bottom: 20px;padding-left: 10px;padding-right: 10px;  text-decoration: none;font-size: 22px;font-weight:bold; font-style:oblique; background:  #DED3FF;color:#8c30f5 ; border-radius:30px">
+              Click here to<span style="color:#8c30f5 ;font-weight:bolder; font-style: normal;"> Knou </span> people
+            </a>
+            <br></br>
+              <br></br>
+            <a href="https://hardcore-hawking-033be2.netlify.app" target="_blank">
+                <img src="${logo}" alt="logo" style="width:200px;height:200px">
+              </a>
+              <footer style="margin-top: 200px;">
+                <span style="color:#4F4F4F;"> © 2020 Knou. All rights reserved</span> 
+            </footer>
+            </div>
+        </body>
+        </html>
         
-    };
-    sgMail.send(msg)
-    .then(()=> {
-        console.log('Email sent');
+        `,
+  };
+  sgMail
+    .send(msg)
+    .then(() => {
+      console.log('Email sent');
     })
-    .catch ((error) => {
-        console.log(error);
+    .catch((error) => {
+      console.log(error);
     });
-    return res.status(201).json(usersUpdated);
+  return res.status(201).json(usersUpdated);
 };
 
 //get all users
