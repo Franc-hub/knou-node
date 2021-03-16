@@ -32,7 +32,7 @@ const getByUser = async (req, res) => {
     return res.status(404).end();
 };
 const eliminatePhoto = (req, res) => {
-    const photoWithoutTheDeleted = Photo.remove(req.params.id);
+    const photoWithoutTheDeleted = photoModel.removePhoto(req.params.id);
     return res.status(200).json(photoWithoutTheDeleted);
   };
 

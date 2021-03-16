@@ -29,16 +29,16 @@ const getPhoto = async (user) => {
     return await Photo.find(query);
 };
 
-const removePhoto = (id) => {
-    let query = { _id: id };
+const removePhoto = (user) => {
+    let query = { user: user };
     Photo.deleteOne(query, function (err, docs) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Deleted Docs : ', docs);
-      }
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Deleted Docs : ', docs);
+        }
     });
-  };
+};
 
 module.exports = {
     createPhoto,

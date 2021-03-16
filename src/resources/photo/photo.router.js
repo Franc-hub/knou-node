@@ -7,7 +7,8 @@ const router = Router();
 router
     .route('/:id/photos')
     .put(upload.single("photo"), photoController.uploadPhoto)
-    .get(photoController.getByUser);
+    .get(photoController.getByUser)
+    .delete(photoController. eliminatePhoto)
 
 
     module.exports = router;
