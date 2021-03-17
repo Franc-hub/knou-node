@@ -10,10 +10,7 @@ const uploadPhoto = async (req, res) => {
         size: req.file.size,
         mimetype: req.file.mimetype,
     });
-
     const photos = await photoModel.getUserPhotos(req.params.userId);
-
-
     // Iterate over each image to convert the buffer array into a base64 string
     all = photos.map((photo) => {
         return {
