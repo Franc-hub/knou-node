@@ -30,12 +30,7 @@ const getByUser = async (req, res) => {
     }
     return res.status(404).end();
 };
-<<<<<<< HEAD
-const eliminatePhoto = (req, res) => {
-    const photoWithoutTheDeleted = Photo.remove(req.params.id._id);
-    return res.status(200).json(photoWithoutTheDeleted);
-  };
-=======
+
 const eliminatePhoto = async (req, res) => {
     await photoModel.removePhoto(req.params.photoId);
     const photoWithoutTheDeleted = await photoModel.getUserPhotos(req.params.userId)
@@ -49,7 +44,6 @@ const eliminatePhoto = async (req, res) => {
 
     return res.status(200).json(all);
 };
->>>>>>> c9127476516ad9c29a6f284491fc275151ea61ac
 
 module.exports = {
     uploadPhoto,
