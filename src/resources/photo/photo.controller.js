@@ -5,13 +5,12 @@ const photoModel = require('./photo.model');
 const uploadPhoto = async (req, res) => {
     const imgToUpload = await photoModel.createPhoto({
         photo: req.file.buffer,
-        user: req.params.id,
+        user: req.params.userId,
         name: req.file.name,
         size: req.file.size,
         mimetype: req.file.mimetype,
     });
-
-    const photos = await photoModel.getPhoto(req.params.id);
+    const photos = await photoModel.getUserPhotos(req.params.userId);
     // Iterate over each image to convert the buffer array into a base64 string
     all = photos.map((photo) => {
         return {
@@ -19,7 +18,7 @@ const uploadPhoto = async (req, res) => {
             id: photo._id
         };
     });
-    console.log(all);
+    console.log(all.length);
 
     return res.status(200).json(all);
 };
@@ -31,10 +30,26 @@ const getByUser = async (req, res) => {
     }
     return res.status(404).end();
 };
+<<<<<<< HEAD
 const eliminatePhoto = (req, res) => {
     const photoWithoutTheDeleted = Photo.remove(req.params.id._id);
     return res.status(200).json(photoWithoutTheDeleted);
   };
+=======
+const eliminatePhoto = async (req, res) => {
+    await photoModel.removePhoto(req.params.photoId);
+    const photoWithoutTheDeleted = await photoModel.getUserPhotos(req.params.userId)
+    all = photoWithoutTheDeleted.map((photo) => {
+        return {
+            image: photo.photo.toString('base64'),
+            id: photo._id
+        };
+    });
+    console.log(all.length);
+
+    return res.status(200).json(all);
+};
+>>>>>>> c9127476516ad9c29a6f284491fc275151ea61ac
 
 module.exports = {
     uploadPhoto,
