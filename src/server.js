@@ -14,11 +14,9 @@ const usersRouter = require('./resources/users/users.router');
 const authRouter = require('./resources/auth/auth.router');
 const dislikeRouter = require('./resources/dislike/dislike.router');
 const likeRouter = require('./resources/like/like.router');
-
 const chatRouter = require('./resources/chat/chat.router');
 const messageRouter = require('./resources/message/message.router');
 const matchRouter = require('./resources/match/match.router');
-
 const photoRouter = require('./resources/photo/photo.router');
 
 //app
@@ -26,13 +24,7 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
-const io = require('socket.io')(server, {
-  cors: {
-    origin: 'http://localhost:3001',
-    methods: ['GET', 'POST'],
-    credentials: true,
-  },
-});
+// server-side
 
 app.use(cors());
 app.use(json());
@@ -60,10 +52,22 @@ app.get(
   }
 );
 
+// const io = require('socket.io')(server, {
+//   cors: {
+//     origin: 'http://localhost:3001/api',
+//     methods: ['GET', 'POST'],
+//     credentials: true,
+//   },
+// });
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+  },
+});
 //start
 const start = async () => {
   try {
-    app.listen(config.port, () => {
+    server.listen(config.port, () => {
       console.log(`REST API on http://localhost:${config.port}/api`);
     });
   } catch (e) {
@@ -72,8 +76,19 @@ const start = async () => {
 };
 
 io.on('connect', (socket) => {
-  socket.on('join', ({ name }, callback) => {
-    console.log(`${name} joined`);
+  socket.on('join', (name, chatId) => {
+    console.log(name, chatId);
+
+    socket.join(chatId);
+
+    socket.emit('message', {
+      user: 'admin',
+      text: `${name}, welcome to the Chat`,
+    });
+  });
+
+  socket.on('sendMessage', (message, name, chat) => {
+    io.to(chat).emit('message', { user: name, text: message });
   });
 });
 
