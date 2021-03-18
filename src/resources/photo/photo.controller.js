@@ -21,7 +21,8 @@ const uploadPhoto = async (req, res) => {
   return res.status(200).json(all);
 };
 const getByUser = async (req, res) => {
-  const photos = await photoModel.getUserPhotos(req.params.id);
+  const photos = await photoModel.getUserPhotos(req.params.userId);
+
   if (photos) {
     console.log(photos);
     return res.status(200).json(photos);
