@@ -23,12 +23,13 @@ const uploadPhoto = async (req, res) => {
     return res.status(200).json(all);
 };
 const getByUser = async (req, res) => {
-    const photos = await photoModel.getPhoto(req.params.id);
-    if (photos) {
-        console.log(photos);
-        return res.status(200).json(photos);
-    }
-    return res.status(404).end();
+  const photos = await photoModel.getUserPhotos(req.params.userId);
+
+  if (photos) {
+    console.log(photos);
+    return res.status(200).json(photos);
+  }
+  return res.status(404).end();
 };
 
 const eliminatePhoto = async (req, res) => {
