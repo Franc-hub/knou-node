@@ -76,10 +76,37 @@ const getUsersByPreferences = async (req, res) => {
     user.gender,
     user.orientation,
     user.age_range,
-    user._id
+    user._id,
+    user.longitud,
+    user.latitud,
+    user.distance_range
   );
   return res.status(200).json(matchedUsers);
 };
+
+const getDistanceBetweenUsers = async (req, res) =>{
+    //source: https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
+    const lat1 = req.body.point1[0]
+    const lon1 = req.body.point1[1]
+    const lat2 = req.body.point2[0]
+    const lon2 = req.body.point2[1]
+    // Converts numeric degrees to radians
+    function toRad(Value) {
+      return Value * Math.PI / 180;
+    }
+    let R = 6371; // Radius of earth in km
+    let dLat = toRad(lat2-lat1);
+    let dLon = toRad(lon2-lon1);
+    let latRad1 = toRad(lat1);
+    let latRad2 = toRad(lat2);
+    let a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(latRad1) * Math.cos(latRad2);
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    let d = R * c;
+    return res.json({
+      distance: d
+    })
+}
 
 module.exports = {
   create,
@@ -88,5 +115,6 @@ module.exports = {
   getOne,
   remove,
   getUsersByPreferences,
+  getDistanceBetweenUsers,
   // getRandom,
 };

@@ -13,6 +13,8 @@ const UserSchema = mongoose.Schema({
   orientation: mongoose.Schema.Types.String,
   description: mongoose.Schema.Types.String,
   location: mongoose.Schema.Types.Array,
+  longitud: mongoose.Schema.Types.Number,
+  latitud: mongoose.Schema.Types.Number,
   distance_range: mongoose.Schema.Types.Number,
   hobbies: mongoose.Schema.Types.Array,
   photos: {
@@ -74,7 +76,7 @@ const remove = (id) => {
   });
 };
 
-const getByPreferences = (gender, orientation, ageRange, userId) => {
+const getByPreferences = (gender, orientation, ageRange, userId, longitud, latitud, distance_range) => {
   const [lowerAge, higherAge] = ageRange;
 
   let query = {
@@ -85,6 +87,23 @@ const getByPreferences = (gender, orientation, ageRange, userId) => {
 
     //faltan por localizacion y rango
   };
+
+  const lat = latitud
+  const lon = longitud
+  const radius = distance_range; //km
+  // Every lat|lon degree° is ~ 111Km
+  const angleRadius = radius / ( 111 * Math.cos(lon));
+  const maxLat = lat - angleRadius;
+  const minLat = lat + angleRadius;
+  const maxLon = lon - angleRadius;
+  const minLon = lon + angleRadius;
+
+  console.log({
+    maxLat,
+    maxLon,
+    minLat,
+    minLon
+  })
 
   if (orientation === 'heterosexual') {
     //let gender = 'male' ? 'female' : 'male'; //no sirve con mujeres la conversion.
@@ -103,6 +122,8 @@ const getByPreferences = (gender, orientation, ageRange, userId) => {
       orientation: { $in: ['homosexual', 'heterosexual', 'bisexual'] },
       age: { $gt: lowerAge, $lt: higherAge },
       _id: { $not: { $eq: userId } },
+      longitud: { $gt: minLon, $lt: maxLon },
+      latitud: { $gt: minLat, $lt: maxLat },
     });
   }
 };

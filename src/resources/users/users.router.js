@@ -25,5 +25,9 @@ router
   .get(usersController.getOne)
   .put(usersController.update)
   .delete(usersController.remove);
+ 
+ router
+ .route("/distanceRange")
+ .post(usersController.getDistanceBetweenUsers) 
 
 module.exports = router;
