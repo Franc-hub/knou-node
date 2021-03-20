@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const matchModel = require('../match/match.model');
 
 // Define model schema
 const UserSchema = mongoose.Schema({
@@ -74,21 +75,49 @@ const remove = (id) => {
   });
 };
 
-const getByPreferences = (gender, orientation, ageRange, userId) => {
+const getByPreferences = async (gender, orientation, ageRange, userId) => {
   const [lowerAge, higherAge] = ageRange;
+
+  const userMatches = await matchModel.allMatchesOfUserId(userId);
+
+  console.log(userMatches);
+
+  let ids = [];
+
+  if (userMatches) {
+    userMatches.map((users) => {
+      ids.push(users.userOne._id, users.userTwo._id);
+    });
+  }
+
+  const blackList = [userId];
+
+  if (ids.length > 1) {
+    ids.map((id) => {
+      blackList.push(id);
+    });
+  }
+
+  console.log(blackList);
+
+  //el blacklist depende si tienes match, hay que añadir el userId al blacklist y ya estaria.
+
+  // function onlyUnique(value, index, self) {
+  //   return self.indexOf(value.toHexString()) === index;
+  // }
+
+  //funciona pero se repite el ID del usuario, falta quitarlo .!! !! ! !! ! !
 
   let query = {
     gender: gender,
     orientation: orientation,
     age: { $gt: lowerAge, $lt: higherAge },
-    _id: { $not: { $eq: userId } },
+    _id: { $not: { $in: userId } },
 
     //faltan por localizacion y rango
   };
 
   if (orientation === 'heterosexual') {
-    //let gender = 'male' ? 'female' : 'male'; //no sirve con mujeres la conversion.
-    //por que la ternaria no sirve?? solo entra la primera condicio.
     if (gender === 'male') {
       gender = 'female';
     } else {
@@ -102,9 +131,14 @@ const getByPreferences = (gender, orientation, ageRange, userId) => {
     return User.find({
       orientation: { $in: ['homosexual', 'heterosexual', 'bisexual'] },
       age: { $gt: lowerAge, $lt: higherAge },
-      _id: { $not: { $eq: userId } },
+      _id: { $not: { $in: blackList } },
     });
   }
+};
+
+const getEmail = async (email) => {
+  let query = { email: email };
+  return await User.findOne(query);
 };
 
 module.exports = {
@@ -114,5 +148,6 @@ module.exports = {
   update,
   remove,
   getByPreferences,
+  getEmail,
   User,
 };
