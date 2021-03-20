@@ -1,5 +1,4 @@
 const userModel = require('./users.model');
-const logo = './assets/image2.png';
 
 const { validationResult } = require('express-validator');
 const sgMail = require('@sendgrid/mail');
@@ -36,7 +35,7 @@ const create = (req, res) => {
             <br></br>
               <br></br>
             <a href="https://hardcore-hawking-033be2.netlify.app" target="_blank">
-                <img src="${logo}" alt="logo" style="width:200px;height:200px">
+                <img src="https://scontent-mad1-1.xx.fbcdn.net/v/t1.0-9/11010960_1086490394699437_1303021328945486501_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=ba80b0&_nc_ohc=nJ4lKu9VJDUAX9R8RZ5&_nc_ht=scontent-mad1-1.xx&oh=3da5b1b187515d523bb3cfc002f6f9aa&oe=6079F27B" alt="logo" style="width:200px;height:200px">
               </a>
               <footer style="margin-top: 200px;">
                 <span style="color:#4F4F4F;"> © 2020 Knou. All rights reserved</span> 
@@ -75,9 +74,10 @@ const getOne = async (req, res) => {
 };
 
 //update user
-const update = (req, res) => {
+const update = async (req, res) => {
   const updateduser = req.body;
-  const usersUpdated = userModel.update(req.params.id, updateduser);
+  const usersUpdated = await userModel.update(req.params.id, updateduser);
+  console.log('usersss' + usersUpdated)
   return res.status(200).json(usersUpdated);
 };
 
