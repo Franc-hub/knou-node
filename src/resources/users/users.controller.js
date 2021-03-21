@@ -4,21 +4,25 @@ const { validationResult } = require('express-validator');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SG_API_KEY);
 //create user
-const create = (req, res) => {
+const create = async (req, res) => {
   // Finds the validation errors in this request and wraps them in an object with handy functions
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log('Received validation errors', errors.array());
     return res.status(400).json({ errors: errors.array() });
   }
-  const newuser = req.body;
-  const usersUpdated = userModel.create(newuser);
-  const msg = {
-    to: newuser.email,
-    from: {
-      email: 'raul.salcedo03@hotmail.com',
-      name: 'Knou',
-    },
+
+  const user = await userModel.getEmail(req.body.email);
+
+  if (!user) {
+    const newuser = req.body;
+    const usersUpdated = userModel.create(newuser);
+    const msg = {
+      to: newuser.email,
+      from: {
+        email: 'raul.salcedo03@hotmail.com',
+        name: 'knou proyect',
+      },
     subject: 'Welcome to Knou',
     html: `<html lang="en">
         <body>
@@ -42,19 +46,20 @@ const create = (req, res) => {
             </footer>
             </div>
         </body>
-        </html>
-        
-        `,
-  };
-  sgMail
-    .send(msg)
-    .then(() => {
-      console.log('Email sent');
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  return res.status(201).json(usersUpdated);
+        </html>`,
+    };
+    sgMail
+      .send(msg)
+      .then(() => {
+        console.log('Email sent');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    return res.status(201).json(usersUpdated);
+  } else {
+    return res.status(400).json({ errors: 'this email already exists' });
+  }
 };
 
 //get all users

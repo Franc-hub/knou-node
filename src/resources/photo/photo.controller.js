@@ -1,42 +1,52 @@
 const photoModel = require('./photo.model');
 
-
-
 const uploadPhoto = async (req, res) => {
-    const imgToUpload = await photoModel.createPhoto({
-        photo: req.file.buffer,
-        user: req.params.id,
-        name: req.file.name,
-        size: req.file.size,
-        mimetype: req.file.mimetype,
-    });
+  const imgToUpload = await photoModel.createPhoto({
+    photo: req.file.buffer,
+    user: req.params.userId,
+    name: req.file.name,
+    size: req.file.size,
+    mimetype: req.file.mimetype,
+  });
+  const photos = await photoModel.getUserPhotos(req.params.userId);
+  // Iterate over each image to convert the buffer array into a base64 string
+  all = photos.map((photo) => {
+    return {
+      image: photo.photo.toString('base64'),
+      id: photo._id,
+    };
+  });
+  console.log(all.length);
 
-    const photos = await photoModel.getPhoto(req.params.id);
-    // Iterate over each image to convert the buffer array into a base64 string
-    all = photos.map((photo) => {
-        return {
-            image: photo.photo.toString('base64'),
-        };
-    });
-    console.log(all);
-
-    return res.status(200).json(all);
+  return res.status(200).json(all);
 };
 const getByUser = async (req, res) => {
-    const photos = await photoModel.getPhoto(req.params.id);
-    if (photos) {
-        console.log(photos);
-        return res.status(200).json(photos);
-    }
-    return res.status(404).end();
+  const photos = await photoModel.getUserPhotos(req.params.userId);
+
+  if (photos) {
+    console.log(photos);
+    return res.status(200).json(photos);
+  }
+  return res.status(404).end();
 };
-const eliminatePhoto = (req, res) => {
-    const photoWithoutTheDeleted = Photo.remove(req.params.id);
-    return res.status(200).json(photoWithoutTheDeleted);
-  };
+const eliminatePhoto = async (req, res) => {
+  await photoModel.removePhoto(req.params.photoId);
+  const photoWithoutTheDeleted = await photoModel.getUserPhotos(
+    req.params.userId
+  );
+  all = photoWithoutTheDeleted.map((photo) => {
+    return {
+      image: photo.photo.toString('base64'),
+      id: photo._id,
+    };
+  });
+  console.log(all.length);
+
+  return res.status(200).json(all);
+};
 
 module.exports = {
-    uploadPhoto,
-    getByUser,
-    eliminatePhoto
+  uploadPhoto,
+  getByUser,
+  eliminatePhoto,
 };

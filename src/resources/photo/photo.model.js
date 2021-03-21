@@ -15,34 +15,24 @@ const PhotoSchema = mongoose.Schema({
 
 const Photo = mongoose.model('PhotoModel', PhotoSchema);
 const createPhoto = async (photo) => {
-    return await Photo.create(photo, function (err, docs) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Created Docs : ', docs);
-            return docs;
-        }
-    });
-};
-const getPhoto = async (user) => {
-    let query = { user: user };
-    return await Photo.find(query);
+    const picture = await Photo.create(photo);
+    return picture;
 };
 
-const removePhoto = (id) => {
-    let query = { _id: id };
-    Photo.deleteOne(query, function (err, docs) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Deleted Docs : ', docs);
-      }
-    });
-  };
+const getUserPhotos = async (user) => {
+    let query = { user: user };
+    const pictures =  await Photo.find(query);
+    return pictures;
+};
+
+const removePhoto = async (photoId) => {
+    let query = { _id: photoId };
+     await Photo.deleteOne(query);
+};
 
 module.exports = {
     createPhoto,
-    getPhoto,
+    getUserPhotos,
     removePhoto,
     Photo
 };
