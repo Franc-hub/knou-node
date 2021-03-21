@@ -52,15 +52,17 @@ const all = async () => {
 };
 
 //update
-const update = (id, updateduser) => {
+const update = async (id, updateduser) => {
   let query = { _id: id };
-  User.updateOne(query, updateduser, function (err, docs) {
+  await User.updateOne(query, updateduser, function (err, docs) {
     if (err) {
       console.log(err);
     } else {
       console.log('Updated Docs : ', docs);
     }
   });
+  const updatedUser = User.findById(query)
+  return updatedUser
 };
 
 //remove

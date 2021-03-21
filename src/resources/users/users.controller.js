@@ -3,7 +3,6 @@ const userModel = require('./users.model');
 const { validationResult } = require('express-validator');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SG_API_KEY);
-
 //create user
 const create = async (req, res) => {
   // Finds the validation errors in this request and wraps them in an object with handy functions
@@ -24,8 +23,30 @@ const create = async (req, res) => {
         email: 'raul.salcedo03@hotmail.com',
         name: 'knou proyect',
       },
-      subject: 'thank you for choosing knou',
-      text: `Hi! dear ${newuser.firstname} welcome to knou`,
+    subject: 'Welcome to Knou',
+    html: `<html lang="en">
+        <body>
+            <h2 style="color:#8c30f5;font-weight: bold;font-size:30px; font-style: oblique;">Hi ${newuser.firstname}!</h2>
+              <div style="width:100%">
+              <p style="font-size:22px;">We would like to welcome you to <span style="color:#8c30f5;font-weight: bold;font-size:30px; font-style: oblique;">Knou</span>, 
+              the best webApp to meet new people from over the world.</p>
+              <br></br>
+              <p style="font-size:22px;">Please follow the next link to finish your profile and confirm your account!</p>
+              <br></br>
+              <a href="https://hardcore-hawking-033be2.netlify.app" target="_blank" style="width:100%;height:200px;padding-top:20px;padding-bottom: 20px;padding-left: 10px;padding-right: 10px;  text-decoration: none;font-size: 22px;font-weight:bold; font-style:oblique; background:  #DED3FF;color:#8c30f5 ; border-radius:30px">
+              Click here to<span style="color:#8c30f5 ;font-weight:bolder; font-style: normal;"> Knou </span> people
+            </a>
+            <br></br>
+              <br></br>
+            <a href="https://hardcore-hawking-033be2.netlify.app" target="_blank">
+                <img src="https://cdn.pixabay.com/photo/2021/03/21/12/50/12-50-17-269_960_720.png" alt="logo" style="width:100px;height:100px">
+              </a>
+              <footer style="margin-top: 200px;">
+                <span style="color:#4F4F4F;"> © 2020 Knou. All rights reserved</span> 
+            </footer>
+            </div>
+        </body>
+        </html>`,
     };
     sgMail
       .send(msg)
@@ -58,9 +79,10 @@ const getOne = async (req, res) => {
 };
 
 //update user
-const update = (req, res) => {
+const update = async (req, res) => {
   const updateduser = req.body;
-  const usersUpdated = userModel.update(req.params.id, updateduser);
+  const usersUpdated = await userModel.update(req.params.id, updateduser);
+  console.log('usersss' + usersUpdated)
   return res.status(200).json(usersUpdated);
 };
 
