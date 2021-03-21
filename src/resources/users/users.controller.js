@@ -35,7 +35,7 @@ const create = (req, res) => {
             <br></br>
               <br></br>
             <a href="https://hardcore-hawking-033be2.netlify.app" target="_blank">
-                <img src="https://scontent-mad1-1.xx.fbcdn.net/v/t1.0-9/11010960_1086490394699437_1303021328945486501_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=ba80b0&_nc_ohc=nJ4lKu9VJDUAX9R8RZ5&_nc_ht=scontent-mad1-1.xx&oh=3da5b1b187515d523bb3cfc002f6f9aa&oe=6079F27B" alt="logo" style="width:200px;height:200px">
+                <img src="https://cdn.pixabay.com/photo/2021/03/21/12/50/12-50-17-269_960_720.png" alt="logo" style="width:100px;height:100px">
               </a>
               <footer style="margin-top: 200px;">
                 <span style="color:#4F4F4F;"> © 2020 Knou. All rights reserved</span> 
