@@ -1,7 +1,7 @@
 const photoModel = require('./photo.model');
 
 const uploadPhoto = async (req, res) => {
-  const imgToUpload = await photoModel.createPhoto({
+  await photoModel.createPhoto({
     photo: req.file.buffer,
     user: req.params.userId,
     name: req.file.name,
